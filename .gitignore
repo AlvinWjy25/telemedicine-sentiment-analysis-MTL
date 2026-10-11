@@ -1,3 +1,8 @@
+# Basic Configuration
 .env
+
+# Do not track pycache & other temporary dir
+*__pycache__
+.vscode/
 
 data/
