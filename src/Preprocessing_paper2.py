@@ -78,6 +78,10 @@ class TextPreprocessing_Paper2:
         return text.lower()
  
     def data_cleaner(self, text: str) -> str:
+
+        if text.isna() == True:
+            text = text.fillna("").astype(str)
+            
         text = re.sub(r'https?://\S+|www\.\S+', ' ', text)    # URL
         text = re.sub(r'[@#]\w+', ' ', text)                  # username, hashtag
         text = re.sub(r'[^a-z\s]', ' ', text)                 # punctuation, numbers, emoji, unique character

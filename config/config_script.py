@@ -1,10 +1,15 @@
 from pathlib import Path
 import sys, os
 
-ROOT_DIR = Path(__file__).resolve().parent
+ROOT_DIR = Path(__file__).resolve().parents[1]
 print(f"ROOT DIR: {ROOT_DIR}")
 
-DATA_DIR = ROOT_DIR / 'data' / 'WeightedSentimentTelemedicineDataset.csv'
+RAW_DATA_DIR = ROOT_DIR / 'data' / 'raw' / 'WeightedSentimentTelemedicineDataset.csv'
+PREPROCESSED_PAPER2_DATA_DIR = ROOT_DIR / 'data' / 'preprocessed' / 'NonWeighted_Sentiment.csv'
+PREPROCESSED_WEIGHTED_DATA_DIR = ROOT_DIR / 'data' / 'preprocessed' / 'Weighted_Sentiment.csv'
+
+PAPER2_SPLIT_DATA_DIR = ROOT_DIR / 'data' / 'preprocessed' / 'NonWeighted_split' 
+WEIGHTED_SPLIT_DATA_DIR = ROOT_DIR / 'data' / 'preprocessed' / 'Weighted_split' 
 
 # Kata negasi, kontras, dan intensifier yang dipertahankan saat keep_negation=True.
 KEEP_WORDS = {
