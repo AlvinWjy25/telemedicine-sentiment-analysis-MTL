@@ -8,6 +8,20 @@ RAW_DATA_DIR = ROOT_DIR / 'data' / 'raw' / 'WeightedSentimentTelemedicineDataset
 PREPROCESSED_WEIGHTED_DATA_DIR = ROOT_DIR / 'data' / 'preprocessed' / 'Weighted_Sentiment.csv'
 WEIGHTED_SPLIT_DATA_DIR = ROOT_DIR / 'data' / 'preprocessed' / 'split' 
 
+# artifact
+ARTIFACT_DIR = ROOT_DIR / 'artifact'
+VECTORIZER_DIR = ARTIFACT_DIR / 'vectorizer'
+MODEL_DIR = ARTIFACT_DIR / 'model'
+
+#Vectorizer
+TFIDF_DIR = VECTORIZER_DIR / 'tfidf.joblib'
+INDOBERT_DIR = VECTORIZER_DIR / 'indobert.joblib'
+
+#Model
+SVM_DIR = MODEL_DIR / 'svm.joblib'
+
+
+
 # Kata negasi, kontras, dan intensifier yang dipertahankan saat keep_negation=True.
 KEEP_WORDS = {
     'tidak', 'tak', 'bukan', 'belum', 'jangan', 'kurang', 'tanpa',
@@ -34,4 +48,7 @@ DEFAULT_NORM_DICT = {
     'mantul': 'mantap betul', 'makasih': 'terima kasih', 'trims': 'terima kasih',
     'tks': 'terima kasih', 'thx': 'terima kasih', 'pake': 'pakai', 'pk': 'pakai',
     'hrs': 'harus', 'lg': 'lagi', 'lgi': 'lagi', 'bkn': 'bukan', 'cm': 'cuma', 'cuman': 'cuma',
+    'baiik': 'baik', 'baiiik': 'baik',
+
+    'sanga2': 'sangat', 'sangatt': 'sangat', 'sangatt': 'sangat', 'sanggat': 'sangat'
 }
