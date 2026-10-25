@@ -20,8 +20,6 @@ INDOBERT_DIR = VECTORIZER_DIR / 'indobert.joblib'
 #Model
 SVM_DIR = MODEL_DIR / 'svm.joblib'
 
-
-
 # Kata negasi, kontras, dan intensifier yang dipertahankan saat keep_negation=True.
 KEEP_WORDS = {
     'tidak', 'tak', 'bukan', 'belum', 'jangan', 'kurang', 'tanpa',
@@ -31,7 +29,7 @@ KEEP_WORDS = {
 }
  
 # Kamus normalisasi AWAL (asumsi). Perluas dari kata paling sering di datamu.
-DEFAULT_NORM_DICT = {
+DEFAULT_NORM_DICT = { #Tidak perlu huruf kapital, karena saat di normalized, sudah lowercase
     # negasi
     'gk': 'tidak', 'ga': 'tidak', 'gak': 'tidak', 'nggak': 'tidak', 'ngga': 'tidak',
     'engga': 'tidak', 'enggak': 'tidak', 'tdk': 'tidak', 'tak': 'tidak', 'tdak': 'tidak',
@@ -48,7 +46,24 @@ DEFAULT_NORM_DICT = {
     'mantul': 'mantap betul', 'makasih': 'terima kasih', 'trims': 'terima kasih',
     'tks': 'terima kasih', 'thx': 'terima kasih', 'pake': 'pakai', 'pk': 'pakai',
     'hrs': 'harus', 'lg': 'lagi', 'lgi': 'lagi', 'bkn': 'bukan', 'cm': 'cuma', 'cuman': 'cuma',
-    'baiik': 'baik', 'baiiik': 'baik',
+    'baiik': 'baik', 'baiiik': 'baik', 'baikkkkkkkkkkk': 'baik', 'baikkk': 'baik',
+    'sipp': 'sip', 'sippp': 'sip', 'sipppp': 'sip', 'siiip': 'sip', 'siip': 'sip',
 
-    'sanga2': 'sangat', 'sangatt': 'sangat', 'sangatt': 'sangat', 'sanggat': 'sangat'
+    'ty': 'terima kasih', 'trimakasih': 'terima kasih', 'terimakasih': 'terima kasih',
+    'goodjob': 'good job',
+    'tdk': 'tidak',
+    'ok': 'oke', 'okee': 'oke', 'okey': 'oke', 'okeyy': 'oke', 'okee': 'oke', 'okeh': 'oke',
+
+    'susah 2': 'susah',
+    'sanga2': 'sangat', 'sangatt': 'sangat', 'sangatt': 'sangat', 'sanggat': 'sangat', 'sanga': 'sangat',
+    'krja': 'kerja',
+    'yaudh': 'ya sudah',
 }
+
+POSITIVE_KEYWORDS = [
+    "oke", "ok", "okee", "okey", "good job", "goodjob", 
+    "baik", 'baikk', 'baiik', "bagus", "sip", 'baik dokternya', 'ty',
+    "siap", "mantap", 'good', 'terima kasih', 'nice', 'thank you', 'terimakasih',
+    'trimakasih', 'sehat selalu', 'sangat berguna', 'okk', 'bagus', 'approved',
+    'like', 'wow', 'terimaksih', 'makasih', 'sabar dokternya'
+]
