@@ -60,6 +60,7 @@ DEFAULT_NORM_DICT = { #Tidak perlu huruf kapital, karena saat di normalized, sud
     'yaudh': 'ya sudah',
 }
 
+'''
 POSITIVE_KEYWORDS = [
     "oke", "ok", "okee", "okey", "good job", "goodjob", 
     "baik", 'baikk', 'baiik', "bagus", "sip", 'baik dokternya', 'ty',
@@ -67,3 +68,4 @@ POSITIVE_KEYWORDS = [
     'trimakasih', 'sehat selalu', 'sangat berguna', 'okk', 'bagus', 'approved',
     'like', 'wow', 'terimaksih', 'makasih', 'sabar dokternya'
 ]
+'''
