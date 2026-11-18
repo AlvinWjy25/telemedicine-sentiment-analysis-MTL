@@ -1,6 +1,8 @@
 from pathlib import Path
 import sys, os
-import datetime
+from datetime import datetime
+timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
 print(f"ROOT DIR: {ROOT_DIR}")
@@ -16,15 +18,16 @@ VECTORIZER_DIR = ARTIFACT_DIR / 'vectorizer'
 MODEL_DIR = ARTIFACT_DIR / 'model'
 MODEL_DIR.mkdir(exist_ok=True, parents=True)
 
-#Vectorizer
-TFIDF_DIR = VECTORIZER_DIR / 'tfidf.joblib'
+SVM_UNWEIGHTED_DIR = MODEL_DIR / f'SVM_UNWEIGHTED_{timestamp}.joblib'
+SVM_WEIGHTED_DIR = MODEL_DIR / f'SVM_WEIGHTED_{timestamp}.joblib'
 
-# EVAL
+#Vectorizer
+TFIDF_UNWEIGHTED_DIR = VECTORIZER_DIR / f'TFIDF_UNWEIGHTED_{timestamp}.joblib'
+TFIDF_WEIGHTED_DIR = VECTORIZER_DIR / f'TFIDF_WEIGHTED_{timestamp}.joblib'
+
+# EVAL (DEPRECATED)
 # EVAL_DIR = ARTIFACT_DIR / 'evaluation'
 # EVAL_DIR.mkdir(exist_ok=True, parents=True)
-
-from datetime import datetime
-timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%s")
 
 INDOBERT_DIR = MODEL_DIR / 'indoBERT_checkpoints'
 INDOBERT_DIR.mkdir(parents=True, exist_ok=True)
