@@ -1,5 +1,6 @@
 from pathlib import Path
 import sys, os
+import datetime
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
 print(f"ROOT DIR: {ROOT_DIR}")
@@ -11,11 +12,25 @@ WEIGHTED_SPLIT_DATA_DIR = ROOT_DIR / 'data' / 'preprocessed' / 'split'
 # artifact
 ARTIFACT_DIR = ROOT_DIR / 'artifact'
 VECTORIZER_DIR = ARTIFACT_DIR / 'vectorizer'
+
 MODEL_DIR = ARTIFACT_DIR / 'model'
+MODEL_DIR.mkdir(exist_ok=True, parents=True)
 
 #Vectorizer
 TFIDF_DIR = VECTORIZER_DIR / 'tfidf.joblib'
-INDOBERT_DIR = VECTORIZER_DIR / 'indobert.joblib'
+
+# EVAL
+# EVAL_DIR = ARTIFACT_DIR / 'evaluation'
+# EVAL_DIR.mkdir(exist_ok=True, parents=True)
+
+from datetime import datetime
+timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%s")
+
+INDOBERT_DIR = MODEL_DIR / 'indoBERT_checkpoints'
+INDOBERT_DIR.mkdir(parents=True, exist_ok=True)
+
+EVAL_BERT_UNWEIGHTED =  INDOBERT_DIR/ f'results_indobert_unweigthed_{timestamp}'
+EVAL_BERT_WEIGHTED = INDOBERT_DIR / f'results_indobert_weighted_{timestamp}'
 
 #Model
 SVM_DIR = MODEL_DIR / 'svm.joblib'
@@ -81,6 +96,14 @@ DEFAULT_NORM_DICT = {
     'siip': 'sip', 'sipp': 'sip',
     'ok': 'oke', 'okee': 'oke', 'okey': 'oke', 'okeyy': 'oke', 'okeh': 'oke',
     'sanga': 'sangat'
+}
+
+LABEL2ID = {"NEGATIVE": 0, "NEUTRAL": 1, "POSITIVE": 2}
+MODEL_NAME = "indobenchmark/indobert-base-p1"
+WEIGHT_MAP_BERT = {
+    "UNINFORMATIVE": 1.0,
+    "INFORMATIVE": 2.0,
+    "COMPLEX": 3.0,
 }
 
 '''
