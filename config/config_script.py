@@ -20,44 +20,67 @@ INDOBERT_DIR = VECTORIZER_DIR / 'indobert.joblib'
 #Model
 SVM_DIR = MODEL_DIR / 'svm.joblib'
 
-# Kata negasi, kontras, dan intensifier yang dipertahankan saat keep_negation=True.
 KEEP_WORDS = {
     'tidak', 'tak', 'bukan', 'belum', 'jangan', 'kurang', 'tanpa',
     'tapi', 'tetapi', 'namun', 'padahal',
-    'sangat', 'sekali', 'lebih', 'bisa',
-    'ga', 'gak', 'nggak', 'gk', 'engga', 'enggak', 'tdk',
+    'sangat', 'sekali', 'lebih', 'bisa'
 }
- 
-# Kamus normalisasi AWAL (asumsi). Perluas dari kata paling sering di datamu.
-DEFAULT_NORM_DICT = { #Tidak perlu huruf kapital, karena saat di normalized, sudah lowercase
-    # negasi
+
+# 2. Critical sentiment words that should NEVER be removed
+PROTECTED_WORDS = {
+    # Negations
+    'tidak', 'tak', 'bukan', 'belum', 'jangan', 'kurang', 'tanpa',
+    # Contrasts
+    'tapi', 'tetapi', 'namun', 'padahal',
+    # Degree / Intensifiers
+    'sangat', 'sekali', 'lebih', 'paling', 'terlalu'
+}
+
+DEFAULT_NORM_DICT = {
+    # --- Negation ---
     'gk': 'tidak', 'ga': 'tidak', 'gak': 'tidak', 'nggak': 'tidak', 'ngga': 'tidak',
     'engga': 'tidak', 'enggak': 'tidak', 'tdk': 'tidak', 'tak': 'tidak', 'tdak': 'tidak',
     'gabisa': 'tidak bisa', 'gaada': 'tidak ada', 'gaje': 'tidak jelas',
-    # umum
-    'tlng': 'tolong', 'tlg': 'tolong', 'lbih': 'lebih', 'lbh': 'lebih',
-    'jwbany': 'jawabannya', 'jwb': 'jawab', 'yg': 'yang', 'dg': 'dengan', 'dgn': 'dengan',
-    'sdh': 'sudah', 'udh': 'sudah', 'udah': 'sudah', 'blm': 'belum', 'sy': 'saya',
-    'aja': 'saja', 'bgt': 'banget', 'bgs': 'bagus', 'krn': 'karena', 'karna': 'karena',
-    'utk': 'untuk', 'tp': 'tapi', 'jg': 'juga', 'trs': 'terus', 'dr': 'dari', 'dpt': 'dapat',
-    'smpe': 'sampai', 'sampe': 'sampai', 'org': 'orang', 'bs': 'bisa', 'sm': 'sama', 'jd': 'jadi',
-    'kpn': 'kapan', 'knp': 'kenapa', 'klo': 'kalau', 'klau': 'kalau', 'kalo': 'kalau',
-    'thn': 'tahun', 'bnyk': 'banyak', 'gmn': 'bagaimana', 'gimana': 'bagaimana',
-    'mantul': 'mantap betul', 'makasih': 'terima kasih', 'trims': 'terima kasih',
-    'tks': 'terima kasih', 'thx': 'terima kasih', 'pake': 'pakai', 'pk': 'pakai',
-    'hrs': 'harus', 'lg': 'lagi', 'lgi': 'lagi', 'bkn': 'bukan', 'cm': 'cuma', 'cuman': 'cuma',
-    'baiik': 'baik', 'baiiik': 'baik', 'baikkkkkkkkkkk': 'baik', 'baikkk': 'baik',
-    'sipp': 'sip', 'sippp': 'sip', 'sipppp': 'sip', 'siiip': 'sip', 'siip': 'sip',
-
-    'ty': 'terima kasih', 'trimakasih': 'terima kasih', 'terimakasih': 'terima kasih',
-    'goodjob': 'good job',
-    'tdk': 'tidak',
-    'ok': 'oke', 'okee': 'oke', 'okey': 'oke', 'okeyy': 'oke', 'okee': 'oke', 'okeh': 'oke',
-
-    'susah 2': 'susah',
-    'sanga2': 'sangat', 'sangatt': 'sangat', 'sangatt': 'sangat', 'sanggat': 'sangat', 'sanga': 'sangat',
-    'krja': 'kerja',
-    'yaudh': 'ya sudah',
+    
+    # --- Medical & App terms ---
+    'apk': 'aplikasi', 'app': 'aplikasi',
+    'rs': 'rumah sakit',
+    'konsul': 'konsultasi',
+    'fast': 'cepat',
+    'aktf': 'aktif',
+    
+    # --- Prepositions & Conjunctions ---
+    'd': 'di',
+    'yg': 'yang', 'dg': 'dengan', 'dgn': 'dengan', 'utk': 'untuk', 
+    'tp': 'tapi', 'jg': 'juga', 'trs': 'terus', 'dr': 'dari', 'dri': 'dari', 'sm': 'sama', 
+    'klo': 'kalau', 'klau': 'kalau', 'kalo': 'kalau', 'krn': 'karena', 'karna': 'karena',
+    'jk': 'jika', 'pdhl': 'padahal',
+    
+    # --- Adverbs, Time & Quantity ---
+    'sdh': 'sudah', 'udh': 'sudah', 'udah': 'sudah', 'blm': 'belum', 
+    'aja': 'saja', 'bgt': 'banget', 'bgs': 'bagus', 'dpt': 'dapat', 
+    'smpe': 'sampai', 'sampe': 'sampai', 'org': 'orang', 'bs': 'bisa', 
+    'jd': 'jadi', 'kpn': 'kapan', 'knp': 'kenapa', 'thn': 'tahun', 
+    'bnyk': 'banyak', 'gmn': 'bagaimana', 'gimana': 'bagaimana',
+    'pake': 'pakai', 'pk': 'pakai', 'hrs': 'harus', 'lg': 'lagi', 
+    'lgi': 'lagi', 'bkn': 'bukan', 'cm': 'cuma', 'cuman': 'cuma',
+    'dlu': 'dulu', 'tdi': 'tadi', 'ky': 'kayak',
+    
+    # --- Communication & Particles ---
+    'sy': 'saya', 'tlng': 'tolong', 'tlg': 'tolong', 
+    'lbih': 'lebih', 'lbh': 'lebih', 'jwbany': 'jawabannya', 'jwb': 'jawab',
+    'krja': 'kerja', 'yaudh': 'ya sudah', 'si': 'sih', 'ko': 'kok',
+    
+    # --- Gratitude & Satisfaction ---
+    'makasih': 'terima kasih', 'trims': 'terima kasih', 'tks': 'terima kasih', 
+    'thx': 'terima kasih', 'ty': 'terima kasih', 'trimakasih': 'terima kasih', 
+    'terimakasih': 'terima kasih', 'mantul': 'mantap betul', 'goodjob': 'good job',
+    
+    # --- Double letters / Colloquial variants ---
+    'baiik': 'baik',
+    'siip': 'sip', 'sipp': 'sip',
+    'ok': 'oke', 'okee': 'oke', 'okey': 'oke', 'okeyy': 'oke', 'okeh': 'oke',
+    'sanga': 'sangat'
 }
 
 '''
