@@ -33,7 +33,7 @@ EVAL_BERT_UNWEIGHTED =  INDOBERT_DIR/ f'results_indobert_unweigthed_{timestamp}'
 EVAL_BERT_WEIGHTED = INDOBERT_DIR / f'results_indobert_weighted_{timestamp}'
 
 #Model
-SVM_DIR = MODEL_DIR / 'svm.joblib'
+SVM_DIR = MODEL_DIR / f'svm_{timestamp}.joblib'
 
 KEEP_WORDS = {
     'tidak', 'tak', 'bukan', 'belum', 'jangan', 'kurang', 'tanpa',
