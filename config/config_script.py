@@ -9,7 +9,22 @@ print(f"ROOT DIR: {ROOT_DIR}")
 
 RAW_DATA_DIR = ROOT_DIR / 'data' / 'raw' / 'WeightedSentimentTelemedicineDataset.csv'
 PREPROCESSED_WEIGHTED_DATA_DIR = ROOT_DIR / 'data' / 'preprocessed' / 'Weighted_Sentiment.csv'
-WEIGHTED_SPLIT_DATA_DIR = ROOT_DIR / 'data' / 'preprocessed' / 'split' 
+WEIGHTED_SPLIT_DATA_DIR = ROOT_DIR / 'data' / 'preprocessed' / 'split'
+
+SPLIT_DIR = ROOT_DIR / 'data' / 'splits'
+SPLIT_FILE = SPLIT_DIR / 'split_ids.csv'
+SPLIT_TEST_SIZE = 0.10
+SPLIT_VALIDATION_SIZE = 0.20
+SPLIT_RANDOM_STATE = 42
+
+PREPROCESSED_TFIDF_DATA_FILE = PREPROCESSED_WEIGHTED_DATA_DIR.with_name(
+    'Weighted_Sentiment_TFIDF.csv'
+)
+PREPROCESSED_INDOBERT_DATA_FILE = PREPROCESSED_WEIGHTED_DATA_DIR.with_name(
+    'Weighted_Sentiment_IndoBERT.csv'
+)
+TFIDF_SPLIT_DATA_DIR = WEIGHTED_SPLIT_DATA_DIR / 'tfidf'
+INDOBERT_SPLIT_DATA_DIR = WEIGHTED_SPLIT_DATA_DIR / 'indobert'
 
 # artifact
 ARTIFACT_DIR = ROOT_DIR / 'artifact'
@@ -18,22 +33,36 @@ VECTORIZER_DIR = ARTIFACT_DIR / 'vectorizer'
 MODEL_DIR = ARTIFACT_DIR / 'model'
 MODEL_DIR.mkdir(exist_ok=True, parents=True)
 
-SVM_UNWEIGHTED_DIR = MODEL_DIR / f'SVM_UNWEIGHTED_{timestamp}.joblib'
-SVM_WEIGHTED_DIR = MODEL_DIR / f'SVM_WEIGHTED_{timestamp}.joblib'
+SVM_UNWEIGHTED_DIR = MODEL_DIR / f'SVM_UNWEIGHTED.joblib'
+SVM_WEIGHTED_DIR = MODEL_DIR / f'SVM_WEIGHTED.joblib'
 
 #Vectorizer
-TFIDF_UNWEIGHTED_DIR = VECTORIZER_DIR / f'TFIDF_UNWEIGHTED_{timestamp}.joblib'
-TFIDF_WEIGHTED_DIR = VECTORIZER_DIR / f'TFIDF_WEIGHTED_{timestamp}.joblib'
+TFIDF_UNWEIGHTED_DIR = VECTORIZER_DIR / f'TFIDF_UNWEIGHTED.joblib'
+TFIDF_WEIGHTED_DIR = VECTORIZER_DIR / f'TFIDF_WEIGHTED.joblib'
 
 # EVAL (DEPRECATED)
 # EVAL_DIR = ARTIFACT_DIR / 'evaluation'
 # EVAL_DIR.mkdir(exist_ok=True, parents=True)
+
+MODEL_NAME = "indobenchmark/indobert-base-p1"
+LABEL2ID = {"NEGATIVE": 0, "NEUTRAL": 1, "POSITIVE": 2}
+WEIGHT_MAP_BERT = {
+    "UNINFORMATIVE": 0.0,
+    "INFORMATIVE": 1.0,
+    "COMPLEX": 2.0,
+}
 
 INDOBERT_DIR = MODEL_DIR / 'indoBERT_checkpoints'
 INDOBERT_DIR.mkdir(parents=True, exist_ok=True)
 
 EVAL_BERT_UNWEIGHTED =  INDOBERT_DIR/ f'results_indobert_unweigthed_{timestamp}'
 EVAL_BERT_WEIGHTED = INDOBERT_DIR / f'results_indobert_weighted_{timestamp}'
+
+EVAL_MTL = MODEL_DIR / 'indoBERT_MTL'
+EVAL_MTL.mkdir(parents=True, exist_ok=True)
+
+EVAL_BERT_MTL = EVAL_MTL / f'results_MTL_indobert_{timestamp}'
+EVAL_CONTROL_BERT_MTL = EVAL_MTL / f'results_control_MTL_indobert_{timestamp}'
 
 #Model
 SVM_DIR = MODEL_DIR / f'svm_{timestamp}.joblib'
@@ -101,13 +130,7 @@ DEFAULT_NORM_DICT = {
     'sanga': 'sangat'
 }
 
-LABEL2ID = {"NEGATIVE": 0, "NEUTRAL": 1, "POSITIVE": 2}
-MODEL_NAME = "indobenchmark/indobert-base-p1"
-WEIGHT_MAP_BERT = {
-    "UNINFORMATIVE": 1.0,
-    "INFORMATIVE": 2.0,
-    "COMPLEX": 3.0,
-}
+
 
 '''
 POSITIVE_KEYWORDS = [
